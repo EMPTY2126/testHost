@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 app.use(express.json());
+app.use(cors());
 
 app
   .route("/bfhl")
@@ -13,26 +15,36 @@ app
     const numbers = [];
     const alphabets = [];
     let highest_alphabet = "";
+    let highest_lowercase_alphabet = "";
 
     for (const item of data) {
       if (!isNaN(item)) {
         numbers.push(item);
       } else if (item.length === 1 && isNaN(item)) {
         alphabets.push(item);
-        if (!highest_alphabet || item.toUpperCase() > highest_alphabet.toUpperCase()) {
+        if (
+          !highest_alphabet ||
+          item.toUpperCase() > highest_alphabet.toUpperCase()
+        ) {
           highest_alphabet = item;
+        }
+        if (
+          item >= 'a' && item <= 'z' && 
+          (!highest_lowercase_alphabet || item > highest_lowercase_alphabet)
+        ) {
+          highest_lowercase_alphabet = item;
         }
       }
     }
 
     res.json({
       is_success: true,
-      user_id: "sanhita17",
-      email: "sanhita.kundu2020@vitstudent.ac.in",
-      roll_number: "20BEC0215",
+      user_id: "avmi24681357",
+      email: "aviral.mishra2021@vitbhopal.ac.in",
+      roll_number: "21BCE10153",
       numbers: numbers,
       alphabets: alphabets,
-      highest_alphabet: highest_alphabet ? [highest_alphabet] : [],
+      highest_lowercase_alphabet: highest_lowercase_alphabet ? [highest_lowercase_alphabet] : [],
     });
   });
 
